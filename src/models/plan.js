@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   Plan.associate = models => {
-    Plan.hasMany(models.Member, {
+    Plan.hasMany(models.Members, {
       foreignKey: 'id',
       as: 'members',
       onDelete: 'CASCADE'

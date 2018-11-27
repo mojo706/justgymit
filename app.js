@@ -1,6 +1,6 @@
 const express = require('express');
 const http = require('http');
-const setupApp = require('./server');
+const setupApp = require('./src');
 
 const app = express();
 

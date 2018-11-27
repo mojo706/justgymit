@@ -1,5 +1,5 @@
 const { Members, Plans } = require('../models')
-const { celebrate, Joi } = require('celebrate')
+const Joi = require('joi');
 
 const schema = {
   firstName: Joi.string().required(),
@@ -7,9 +7,15 @@ const schema = {
   dateOfBirth: Joi.date().required(),
 };
 
-const validateUser = celebrate({
-  body: Joi.validate(schema)
-});
+const validateUser = (req, res, next) => {
+  const valid = Joi.validate(schema);
+  if (!valid) {
+    res.status(400).json({
+      message: 'Invalid user'
+    });
+  }
+};
+
 
 const validateUserId = async (req, res, next) => {
   if (!req.params.userId) {

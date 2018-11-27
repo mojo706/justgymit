@@ -1,6 +1,6 @@
-const { Members, Plans } = require('../models')
+const { Members, Plans } = require('../models');
 
-const { celebrate, Joi } = require('celebrate')
+const Joi = require('joi');
 const schema = {
   name: Joi.string().required(),
   type: Joi.string().valid('recurrent', 'time limited'),
@@ -8,17 +8,14 @@ const schema = {
   endDate: Joi.date()
 };
 
-const validatePlan = celebrate({
-  body: Joi.object.keys(schema).when(Joi.object({
-    type: Joi.string.valid('time limited')
-  }),{
-    then: Joi.object.keys({
-      ...schema,
-      startDate: schema.startDate.required(),
-      endDate: schema.endDate.required()
+const validatePlan = (req, res, next) => {
+  const valid = Joi.validate(schema)
+  if (!valid) {
+    res.status(400).json({
+      message: 'Invalid plan'
     })
-  })
-})
+  }
+}
 
 const validatePlanId = async (req, res, next) => {
   if (!req.params.planId) {
@@ -33,20 +30,22 @@ const validatePlanId = async (req, res, next) => {
     return;
   }
   next();
-}
+};
 const validateMemberId = async (req, res, next) => {
   if (!req.params.memberId) {
     res.status(400).json({
       message: 'memberId is missing!'
-    })
+    });
     return;
   }
-  const member = await Members.findById(req.params.memberId)
+  const member = await Members.findById(req.params.memberId);
   if (!member) {
-    res.status(404).json({ message: 'A User with that memberId does not exist' });
+    res
+      .status(404)
+      .json({ message: 'A User with that memberId does not exist' });
     return;
   }
   next();
-}
+};
 
 module.exports = { validatePlan, validatePlanId, validateMemberId };

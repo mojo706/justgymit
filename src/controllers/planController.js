@@ -35,7 +35,7 @@ const listMembers = async (req, res) => {
   res.status(200).json(members);
 };
 
-const listMembers = async (req, res) => {
+const removeMember = async (req, res) => {
   const member = await Member.findById(req.params.memberId);
   await member.update({ planId: null });
   res.status(200).json({
@@ -51,4 +51,4 @@ const addMember = async (req, res) => {
   })
 }
 
-module.exports = { addPlan, updatePlan, deletePlan, listMembers, addMember }
+module.exports = { addPlan, updatePlan, deletePlan, listMembers, addMember, removeMember }

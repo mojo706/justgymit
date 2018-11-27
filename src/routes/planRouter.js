@@ -23,7 +23,7 @@ const router = () => {
   planRouter
     .route('/:planId/members/:memberId')
     .post(planController.addMember)
-    .delete(planController.deleteMember);
+    .delete(planController.removeMember);
   planRouter.route('/:planId/members').get(planController.listMembers);
   return planRouter;
 };
