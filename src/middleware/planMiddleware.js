@@ -9,14 +9,14 @@ const schema = {
 };
 
 const validatePlan = (req, res, next) => {
-  const valid = Joi.validate(schema)
-  if (!valid) {
-    res.status(400).json({
-      message: 'Invalid plan'
-    })
-  }
-  next()
-}
+  Joi.validate(req.body, schema, (error) => {
+    if (error) {
+      res.status(400).json({ message: error.details[0].message });
+      return;
+    }
+    next();
+  });
+};
 
 const validatePlanId = async (req, res, next) => {
   if (!req.params.planId) {
