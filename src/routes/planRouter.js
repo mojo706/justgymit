@@ -1,20 +1,30 @@
 const express = require('express');
 const planController = require('../controllers/planController');
+const {
+  validatePlan,
+  validatePlanId,
+  validateMemberId
+} = require('../middleware/planMiddleware');
 
 const planRouter = express.Router();
 
 const router = () => {
+  planRouter.route('/').post(validatePlan, planController.addPlan);
+
+  planRouter.use('/:planId', validatePlanId);
+
   planRouter
-    .route('/')
-    .post(planController.addPlan)
-    .put(planController.updatePlan)
+    .route('/:planId')
+    .put(validatePlan, planController.updatePlan)
     .delete(planController.deletePlan);
+  
+  planRouter.use('/:planId/members/:memberId', validateMemberId);
+
   planRouter
-    .route('/members')
-    .get(planController.listMembers)
+    .route('/:planId/members/:memberId')
     .post(planController.addMember)
     .delete(planController.deleteMember);
-  
+  planRouter.route('/:planId/members').get(planController.listMembers);
   return planRouter;
 };
 
