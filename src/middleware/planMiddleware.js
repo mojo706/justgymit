@@ -15,6 +15,7 @@ const validatePlan = (req, res, next) => {
       message: 'Invalid plan'
     })
   }
+  next()
 }
 
 const validatePlanId = async (req, res, next) => {

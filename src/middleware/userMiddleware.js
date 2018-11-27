@@ -14,6 +14,7 @@ const validateUser = (req, res, next) => {
       message: 'Invalid user'
     });
   }
+  next()
 };
 
 

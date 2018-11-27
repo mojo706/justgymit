@@ -1,7 +1,7 @@
 const { Members, Plans } = require('../models');
 
 const addUser = async (req, res) => {
-  const [created, newUser] = await Members.findOrCreate({
+  const [newUser, created] = await Members.findOrCreate({
     where: req.body,
     defaults: req.body,
     plain: true

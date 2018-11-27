@@ -1,3 +1,4 @@
+const cuid = require('cuid')
 module.exports = (sequelize, DataTypes) => {
   const Plan = sequelize.define('Plans', {
     id: {
