@@ -23,7 +23,7 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   const user = await Members.findById(req.params.userId);
-  await user.delete();
+  await user.destroy();
   res.status(200).json({
     message: 'That user has been deleted'
   });

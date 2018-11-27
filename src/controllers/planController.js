@@ -23,7 +23,7 @@ const updatePlan = async (req, res) => {
 
 const deletePlan = async (req, res) => {
   const plan = await Plans.findById(req.params.planId);
-  await plan.delete();
+  await plan.destroy();
   res.status(200).json({
     message: 'That plan was deleted'
   });
