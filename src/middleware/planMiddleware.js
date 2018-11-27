@@ -9,12 +9,30 @@ const schema = {
 };
 
 const validatePlan = (req, res, next) => {
-  Joi.validate(req.body, schema, (error) => {
+  Joi.validate(req.body, schema, error => {
     if (error) {
       res.status(400).json({ message: error.details[0].message });
       return;
     }
-    next();
+    if (req.body.type === 'time limited') {
+      Joi.validate(
+        req.body,
+        {
+          ...schema,
+          startDate: schema.startDate.required(),
+          endDate: schema.endDate.required()
+        },
+        err => {
+          if (err) {
+            res.status(400).json({ message: err.details[0].message });
+            return;
+          }
+          next();
+        }
+      );
+    } else {
+      next();
+    }
   });
 };
 
