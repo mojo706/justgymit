@@ -5,10 +5,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: () => cuid()
     },
-    memberId: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
     name: {
       allowNull: false,
       type: DataTypes.STRING
